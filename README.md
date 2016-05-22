@@ -5,7 +5,7 @@
 
 add the following to your .bash_profile
 ```
-\#coffee commands
+#coffee commands
 alias coffee-l='python ~/design/caffeinate/coffee.py menu'
 alias coffee-+='python ~/design/caffeinate/coffee.py add_cup'
 alias coffee-c='python ~/design/caffeinate/coffee.py new_day'
