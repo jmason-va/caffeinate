@@ -49,6 +49,12 @@ def add_to_totals():
 	write_totals_file(daily_total, all_time_total)
 	print_totals(daily_total, all_time_total)
 
+def subtract_from_totals():
+	totals = read_totals_file()
+	daily_total = int(totals[0]) - 1		#first number a total that is reset daily
+	all_time_total = int(totals[1]) - 1		#second number is all time total
+	write_totals_file(daily_total, all_time_total)
+	print_totals(daily_total, all_time_total)
 
 def clear_daily_total():
 	totals = read_totals_file()
@@ -84,5 +90,8 @@ if command == 'get_totals':
 if command == 'clear_all':
 	clear_totals()
 
+if command == 'subtract_cup':
+	subtract_from_totals()
+	
 if command == 'menu':
 	print_menu()
