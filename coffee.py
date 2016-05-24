@@ -4,24 +4,27 @@ command = str(argv[1])
 
 def print_menu():
 	print
-	print '/////////////////'
-	print '// coffee menu //'
+	print '///////////////////'
+	print '// beverage menu //'
 	print '/////////////////////////////////////////////////////////'
 	print '/	    coffee-l: main menu                      \t/'
-	print '/	    -+: adds cup to daily total              \t/'        
-	print '/	    -c: clears daily total                   \t/'
-	print '/	    -a: clears all                           \t/'
-	print '/	    -t: gets total                           \t/'
+	print '/	          -+: adds coffee cup to daily total \t/'        
+	print '/	          -c: clears daily total             \t/'
+	print '/	          -a: clears all                     \t/'
+	print '/	          -t: gets total                     \t/'
+	print '/	          -w: adds water cup to daily total  \t/'
 	print '/////////////////////////////////////////////////////////'
 	print
 
-def print_totals(daily_total, all_time_total):
+def print_totals(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total):
 	print
 	print
-	print '//////////////////////////////////////////'
-	print '/	    daily total: %d       \t /' % daily_total
-	print '/	    all time total: %d   \t /' % all_time_total
-	print '//////////////////////////////////////////'
+	print '/////////////////////////////////////////'
+	print '/        water:   daily:     %d        \t/' % water_daily_total
+	print '/                 all time:  %d        \t/' % water_all_time_total
+	print '/        coffee:  daily:     %d        \t/' % coffee_daily_total
+	print '/                 all time:  %d        \t/' % coffee_all_time_total	
+	print '/////////////////////////////////////////'
 	print
 	print
 
@@ -37,49 +40,70 @@ def read_totals_file():
 		print "you're totals have been deleted!"
 	return totals
 
-def write_totals_file(daily_total, all_time_total):
+def write_totals_file(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total):
 	infile = open('/Users/jmason/design/caffeinate/coffee_total.txt', 'w')
-	infile.write(str(daily_total) + ',' + str(all_time_total))
+	infile.write(str(coffee_daily_total) + ',' + str(coffee_all_time_total) + ',' + str(water_daily_total) + ',' + str(water_all_time_total))
 	infile.close()
 
-def add_to_totals():
+def add_to_totals(type):
 	totals = read_totals_file()
-	daily_total = int(totals[0]) + 1		#first number a total that is reset daily
-	all_time_total = int(totals[1]) + 1		#second number is all time total
-	write_totals_file(daily_total, all_time_total)
-	print_totals(daily_total, all_time_total)
+	if type == 'coffee':
+		coffee_daily_total = int(totals[0]) + 1		
+		coffee_all_time_total = int(totals[1]) + 1
+		water_daily_total = int(totals[2])
+		water_all_time_total = int(totals[3])
+
+	if type == 'water':
+		coffee_daily_total = int(totals[0])
+		coffee_all_time_total = int(totals[1])
+		water_daily_total = int(totals[2]) + 1
+		water_all_time_total = int(totals[3]) + 1
+
+	write_totals_file(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
+	print_totals(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
 
 def subtract_from_totals():
 	totals = read_totals_file()
-	daily_total = int(totals[0]) - 1		#first number a total that is reset daily
-	all_time_total = int(totals[1]) - 1		#second number is all time total
-	write_totals_file(daily_total, all_time_total)
-	print_totals(daily_total, all_time_total)
+	coffee_daily_total = int(totals[0]) -1							
+	coffee_all_time_total = int(totals[1]) -1	
+	water_daily_total = int(totals[2]) -1
+	water_all_time_total = int(totals[3]) -1 
+	write_totals_file(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
+	print_totals(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
 
 def clear_daily_total():
 	totals = read_totals_file()
-	daily_total = 0							
-	all_time_total = int(totals[1])	
-	write_totals_file(daily_total, all_time_total)
-	print_totals(daily_total, all_time_total)
+	coffee_daily_total = 0							
+	water_daily_total = 0
+	coffee_all_time_total = int(totals[1])	
+	water_all_time_total = int(totals[3]) 
+	write_totals_file(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
+	print_totals(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
 
 def get_totals():
 	totals = read_totals_file()
-	daily_total = int(totals[0]) 
-	all_time_total = int(totals[1]) 
-	print_totals(daily_total, all_time_total)
+	coffee_daily_total = int(totals[0]) 
+	coffee_all_time_total = int(totals[1]) 
+	water_daily_total = int(totals[2]) 
+	water_all_time_total = int(totals[3]) 
+	print_totals(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
 
 
 def clear_totals():
-	daily_total = 0							
-	all_time_total = 0
-	write_totals_file(daily_total, all_time_total)
-	print_totals(daily_total, all_time_total)
+	coffee_daily_total = 0							
+	coffee_all_time_total = 0
+	water_daily_total = 0
+	water_all_time_total = 0
+	write_totals_file(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
+	print_totals(coffee_daily_total, coffee_all_time_total, water_daily_total, water_all_time_total)
 
 
 
-if command == 'add_cup':
-	add_to_totals()
+if command == 'add_coffee':
+	add_to_totals('coffee')
+
+if command == 'add_water':
+	add_to_totals('water')
 
 if command == 'new_day':
 	clear_daily_total()
@@ -92,6 +116,6 @@ if command == 'clear_all':
 
 if command == 'subtract_cup':
 	subtract_from_totals()
-	
+
 if command == 'menu':
 	print_menu()
